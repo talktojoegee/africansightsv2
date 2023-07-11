@@ -7,7 +7,7 @@
 
 
    @include('partials.home._footer-note')
-    @include('cookie-consent::index')
+
 </div>
 
 @include('partials.home._footer-script')
