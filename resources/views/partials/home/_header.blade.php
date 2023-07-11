@@ -16,6 +16,9 @@
             box-shadow: 0 2px 3px rgb(0 0 0 / 10%);
             box-sizing: content-box;
         }
+       .js-cookie-consent-agree {
+            width:100% !important; height:90px !important; background:#F91942 !important; color: #fff !important;
+        }
     </style>
     @yield('extra-style')
 </head>
