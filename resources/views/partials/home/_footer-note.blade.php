@@ -34,7 +34,8 @@
                 <ul class="social-icons margin-top-20">
                     <li><a class="facebook" href="{{env('FACEBOOK_HANDLER')}}" target="_blank"><i class="icon-facebook"></i></a></li>
                     <li><a class="twitter" href="{{env('TWITTER_HANDLER')}}" target="_blank"><i class="icon-twitter"></i></a></li>
-                    <li><a class="vimeo" href="{{env('INSTAGRAM_HANDLER')}}" target="_blank"><i class="icon-instagram"></i></a></li>
+                    <li><a class="instagram" href="{{env('INSTAGRAM_HANDLER')}}" target="_blank"><i class="icon-instagram"></i></a></li>
+                    <li><a class="tumblr" href="{{env('TIKTOK_HANDLER')}}" target="_blank"><i class="icon-tumblr"></i></a></li>
                 </ul>
             </div>
 

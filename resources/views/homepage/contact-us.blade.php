@@ -29,9 +29,9 @@
                 <div class="sidebar-textbox">
                     <p>Collaboratively administrate channels whereas virtual. Objectively seize scalable metrics whereas proactive e-services.</p>
                     <ul class="contact-details">
-                        <li><i class="im im-icon-Phone-2"></i> <strong>Phone:</strong> <span>+2348032404359 </span></li>
-                        <li><i class="im im-icon-Globe"></i> <strong>Web:</strong> <span><a href="http://www.propertymanagerng.com/" target="_blank">https://www.propertymanagerng.com</a></span></li>
-                        <li><i class="im im-icon-Envelope"></i> <strong>E-Mail:</strong> <span><a href="mailto:info@propertymanagerng.com">info@propertymanagerng.com</a></span></li>
+                        <li><i class="im im-icon-Phone-2"></i> <strong>Phone:</strong> <span>{{env('APP_PHONE')}} </span></li>
+                        <li><i class="im im-icon-Globe"></i> <strong>Web:</strong> <span><a href="{{env('APP_URL')}}" target="_blank">{{env('APP_URL')}}</a></span></li>
+                        <li><i class="im im-icon-Envelope"></i> <strong>E-Mail:</strong> <span><a href="mailto:{{env('APP_EMAIL')}}">{{env('APP_EMAIL')}}</a></span></li>
                     </ul>
                 </div>
             </div>

@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-12" style="">
             <div class="mobile-nav-toggle hidden-md hidden-lg">
-                <a href="#" title="Menu">
+                <a href="{{ route('homepage') }}" title="Menu">
                     <span><span></span><span></span></span>
                 </a>
             </div>
@@ -46,11 +46,11 @@
                             <a href="javascript:void(0);" >About us</a>
                         </div>
                         <ul>
-                            <li><a href="{{route('general-login')}}"><i class="im im-icon-Eye"></i>  African Sights</a></li>
-                            <li><a href="{{route('general-login')}}"><i class="im im-icon-Radio"></i> Media Services</a></li>
-                            <li><a href="{{route('general-login')}}"><i class="im im-icon-Money-Bag"></i> Contribute</a></li>
-                            <li><a href="{{route('general-login')}}"><i class="im im-icon-Shopping-Cart"></i> Shop</a></li>
-                            <li><a href="{{route('general-login')}}"><i class="im im-icon-Calendar"></i> Calendar</a></li>
+                            <li><a href="#"><i class="im im-icon-Eye"></i>  African Sights</a></li>
+                            <li><a href="#"><i class="im im-icon-Radio"></i> Media Services</a></li>
+                            <li><a href="#"><i class="im im-icon-Money-Bag"></i> Contribute</a></li>
+                            <li><a href="#"><i class="im im-icon-Shopping-Cart"></i> Shop</a></li>
+                            <li><a href="#"><i class="im im-icon-Calendar"></i> Calendar</a></li>
                         </ul>
                     </div>
 
