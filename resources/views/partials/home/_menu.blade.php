@@ -8,7 +8,7 @@
                 </a>
             </div>
             <div class="brand" style="padding: 35px 0px; height: auto; text-align: center; ">
-                <a href="#">
+                <a href="{{ route('homepage') }}">
                     <img height="100" width="160" src="/assets/images/logo.png" class="attachment-full size-full" alt="Culture tourist" decoding="async" loading="lazy" >
                 </a>
                 <h4 style="margin: 15px 0 -5px 46px;">
