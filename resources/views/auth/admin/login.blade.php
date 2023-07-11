@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>{{config('app.name')}} | Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Property Management " name="description" />
+    <meta content="African Sights Backoffice " name="description" />
     <meta content="{{config('app.name')}}" name="author" />
     <link rel="shortcut icon" href="/assets/images/favicon.ico">
     <link href="/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />

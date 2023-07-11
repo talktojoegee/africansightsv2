@@ -25,6 +25,7 @@ Route::post('/leave-comment', [App\Http\Controllers\HomeController::class, 'leav
 Route::get('/search-article', [App\Http\Controllers\HomeController::class, 'searchArticle'])->name('search-article');
 Route::get('/contact-us', [App\Http\Controllers\HomeController::class, 'showContactUs'])->name('show-contact-us');
 Route::post('/contact-us', [App\Http\Controllers\HomeController::class, 'storeContactUsRequest']);
+Route::get('/privacy-policy', [App\Http\Controllers\HomeController::class, 'showPrivacyPolicy'])->name('show-privacy-policy');
 Route::get('/category/{slug}', [App\Http\Controllers\HomeController::class, 'showPostByCategory'])->name('show-post-by-category');
 
 

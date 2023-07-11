@@ -289,5 +289,10 @@ class HomeController extends Controller
     }
 
 
+    public function showPrivacyPolicy(){
+        return view('homepage.privacy-policy');
+    }
+
+
 
 }

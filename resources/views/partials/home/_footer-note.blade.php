@@ -16,6 +16,7 @@
                     <li><a href="{{route('general-login')}}">Contribute</a></li>
                     <li><a href="{{route('show-contact-us')}}">Shop</a></li>
                     <li><a href="{{route('show-contact-us')}}">Calendar</a></li>
+                    <li><a href="{{route('show-privacy-policy')}}">Privacy Policy</a></li>
                 </ul>
                 <ul class="footer-links">
                 @foreach($menus::getPrimaryMenu() as $menu)
