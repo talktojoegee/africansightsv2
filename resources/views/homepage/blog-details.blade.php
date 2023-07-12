@@ -83,7 +83,7 @@
                                <div class="arrow-comment"></div>
                                <div class="comment-by">{{$comment->name ?? '' }}<span class="date">{{date('d M, Y', strtotime($comment->created_at))}}</span>
                                </div>
-                               {!! $comment->comment !!}
+                               {{ $comment->comment }}
                            </div>
 
                        </li>

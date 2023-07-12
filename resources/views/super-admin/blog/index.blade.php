@@ -62,7 +62,36 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        <a href="" class="btn btn-custom">View <i class="bx bx-home-circle"></i> </a>
+
+                                        <div class="btn-group">
+                                            <i class="bx bx-dots-vertical dropdown-toggle text-warning" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;"></i>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="{{ route('read-article', $article->slug) }}"> <i class="bx bx-book-open text-info"></i> View Article</a>
+                                                <a class="dropdown-item" href="{{route('edit-article', $article->slug)}}"> <i class="bx bx-pencil text-warning"></i> Edit Article</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-target="#deleteArticleModal_{{$article->id}}" data-bs-toggle="modal"> <i class="bx bxs-trash text-danger"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                        <div id="deleteArticleModal_{{$article->id}}" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="myModalLabel">Are you sure?</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p class="text-wrap">This action cannot be undone. Are you sure you want to <span class="text-danger">delete</span> <strong><i>{{ $article->title ?? ''  }}</i></strong>?</p>
+                                                        <form action="{{ route('delete-article') }}" method="post">
+                                                            @csrf
+                                                            <input type="hidden" name="articleId" value="{{ $article->id }}">
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Cancel</button>
+                                                                <button type="submit" class="btn btn-danger waves-effect waves-light">Delete</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

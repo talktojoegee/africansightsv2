@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\PostAsCategory;
 use App\Models\PostCategory;
+use App\Models\PostComment;
 use App\Models\PostImage;
 use Illuminate\Http\Request;
 
@@ -69,30 +70,79 @@ class BlogController extends Controller
             "featuredImage.image"=>"Choose an image to feature in this post",
             "category.required"=>"Select a category for this article",
         ]);
-       /* $content = $request->postContent;
-        $dom = new \DOMDocument();
-        $dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        $imageFiles = $dom->getElementsByTagName('img');
-        foreach($imageFiles as $item=> $image ){
-            $data = $image->getAttribute('src');
-            list($type, $data) = explode(';', $data);
-            list(, $data) = explode(',', $data);
-            $imageData = base64_decode($data);
-            $imageName = "/upload".time().$item.'.png';
-            $path = public_path().$imageName;
-            file_put_contents($path, $imageData);
-
-            $image->removeAttribute('src');
-            $image->setAttribute('src', $imageName);
-        }
-        $content = $dom->saveHTML();*/
-        //return dd($content);
         $post = $this->post->createNewPost($request);
         foreach($request->category as $cat){
             $this->postascategory->createPostAsCategory($post->id, $cat);
         }
         session()->flash("success", "Your article was published!");
         return back();
+    }
+
+
+    public function editArticle(Request $request){
+        $this->validate($request,[
+            'title'=>'required',
+            'postContent'=>'required',
+            'featuredImage'=>'required|image|mimes:jpg,jpeg,png',
+            'category'=>'required|array',
+            'category.*'=>'required'
+        ],[
+            "title.required"=>"What's the title of your article?",
+            "postContent.required"=>"Certainly your article should have content",
+            "featuredImage.required"=>"Choose a featured image; a nice one will make sense",
+            "featuredImage.mimes"=>"Unsupported format. The following formats are allowed: jpg, jpeg, png",
+            "featuredImage.image"=>"Choose an image to feature in this post",
+            "category.required"=>"Select a category for this article",
+        ]);
+        $post = $this->post->updatePost($request);
+        foreach($request->category as $cat){
+            $this->postascategory->createPostAsCategory($post->id, $cat);
+        }
+        session()->flash("success", "Your article was published!");
+        return redirect()->route('manage-articles');
+    }
+
+    public function deleteArticle(Request $request){
+
+        $this->validate($request,[
+            'articleId'=>'required'
+        ]);
+        $article = $this->post->getPostById($request->articleId);
+        if(!empty($article)){
+            $article->delete();
+            session()->flash("success", "Success! Article deleted");
+            return redirect()->route('manage-articles');
+        }else{
+            abort(404);
+        }
+    }
+
+    public function readArticle($slug){
+        $article = $this->post->getArticleBySlug($slug);
+        if(!empty($article)){
+
+            return view('super-admin.blog.view',['article'=>$article]);
+        }else{
+            abort(404);
+        }
+    }
+
+
+    public function actionArticleComment(Request $request){
+        $this->validate($request, [
+            'commentId'=>'required',
+            'status'=>'required'
+        ]);
+        $comment = PostComment::find($request->commentId);
+        if(!empty($comment)){
+            $comment->status = $request->status;
+            $comment->save();
+            session()->flash("success", "Comment status updated!");
+            return back();
+        }else{
+            session()->flash("error", "Whoops! Could not update comment status");
+            return redirect()->route('manage-articles');
+        }
     }
 
     public function uploadArticleFiles(Request $request){
@@ -146,5 +196,19 @@ class BlogController extends Controller
         ]);
     }
 
+
+    public function showEditArticle($slug){
+        $article = $this->post->getArticleBySlug($slug);
+        if(!empty($article)){
+            return view('super-admin.blog.edit',
+                [
+                    'article'=>$article,
+                    'categories'=>$this->postascategory->getAllCategories(),
+                ]);
+        }else{
+            session()->flash("error", "Record not found");
+            return back();
+        }
+    }
 
 }

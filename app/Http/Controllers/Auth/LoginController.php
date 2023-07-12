@@ -42,7 +42,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->user = new User();
-        $this->tenant = new Tenant();
+        //$this->tenant = new Tenant();
     }
 
     public function login(Request $request){
@@ -77,15 +77,10 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        $subDomain = strtolower(str_replace('.'. env('APP_URL'), '', request()->getHost()));
-        $tenant = $this->tenant->getTenantByWebsite($subDomain);
-        if(!empty($tenant)){
-            return view('auth.login',[
-                'tenant'=>$tenant
-            ]);
-        }else{
-            abort(404);
-        }
+        //$subDomain = strtolower(str_replace('.'. env('APP_URL'), '', request()->getHost()));
+        //$tenant = $this->tenant->getTenantByWebsite($subDomain);
+            return view('auth.login');
+
     }
 
     public function showGeneralLoginForm()

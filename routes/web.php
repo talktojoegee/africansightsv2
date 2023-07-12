@@ -78,6 +78,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/add-new-article', [App\Http\Controllers\BlogController::class, 'storeArticle']);
         Route::post('/upload-article-files', [App\Http\Controllers\BlogController::class, 'uploadArticleFiles'])->name('upload-article-files');
         Route::get('/manage-articles', [App\Http\Controllers\BlogController::class, 'manageArticles'])->name('manage-articles');
+        Route::get('/edit-article/{slug}', [App\Http\Controllers\BlogController::class, 'showEditArticle'])->name('edit-article');
+        Route::post('/save-article-changes', [App\Http\Controllers\BlogController::class, 'editArticle'])->name('save-article-changes');
+        Route::post('/delete-article', [App\Http\Controllers\BlogController::class, 'deleteArticle'])->name('delete-article');
+        Route::get('/read-article/{slug}', [App\Http\Controllers\BlogController::class, 'readArticle'])->name('read-article');
+        Route::post('/action-article-comment', [App\Http\Controllers\BlogController::class, 'actionArticleComment'])->name('action-article-comment');
 
 
         Route::get('/app-modules', [App\Http\Controllers\Admin\AccessControl::class, 'showModules'])->name('show-app-modules');

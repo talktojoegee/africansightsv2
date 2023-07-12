@@ -23,4 +23,8 @@ class PostAsCategory extends Model
     public function getAllPostIdsByCategoryId($catId){
         return PostAsCategory::where('category_id', $catId)->pluck('post_id');
     }
+
+    public function getAllCategories(){
+        return PostCategory::all();
+    }
 }
