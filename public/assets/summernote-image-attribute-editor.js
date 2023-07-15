@@ -21,7 +21,11 @@
                 captionLabel: 'Caption',
                 tooltip: 'Edit Image',
                 dialogSaveBtnMessage: 'Save',
-                dialogTitle: 'Change Image Attributes'
+                dialogTitle: 'Change Image Attributes',
+                widthLabel:"Width",
+                heightLabel: "Height",
+                imageLockLabel: "Lock",
+                resizeLabel: 'Resize'
             }
         }
     });
@@ -74,11 +78,11 @@
 								<div class="row">
 									<div class="form-group col-sm-4">
 										<label class="note-form-label">${lang.imageAttributes.widthLabel}</label>
-										<input class="form-control note-input note-image-width" type="number" />
+										<input class="form-control note-input note-image-width" name="note-image-width" type="number" />
 									</div>
 									<div class="form-group col-sm-4">
 										<label class="note-form-label">${lang.imageAttributes.heightLabel}</label>
-										<input class="form-control note-input note-image-height" type="number" />
+										<input class="form-control note-input note-image-height" name="note-image-height" type="number" />
 									</div>
 									<div class="form-group col-sm-4">
 										<label class="note-form-label">${lang.imageAttributes.imageLockLabel}</label>
@@ -94,7 +98,7 @@
 									</div>
 								</div>`;
 
-                var footer = `<button href="#" class="btn btn-primary note-image-title-btn note-btn">${lang.imageAttributes.dialogSaveBtnMessage}</button>`;
+                var footer = `<button type="button" class="btn btn-primary note-image-title-btn note-btn">${lang.imageAttributes.dialogSaveBtnMessage}</button>`;
 
                 this.$dialog = ui.dialog({
                     title: lang.imageAttributes.dialogTitle,

@@ -111,13 +111,13 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-    <script src="/assets/summernote-image-attribute-editor.js"></script>
+    {{--<script src="/assets/summernote-image-attribute-editor.js"></script>--}}
 
     <script>
         $(document).ready(function() {
             $('#summernote').summernote({
                 height:200,
-                imageAttributes: {
+          /*      imageAttributes: {
                     icon: '<i class="note-icon-pencil"/>',
                     figureClass: 'figureClass',
                     figcaptionClass: 'captionClass',
@@ -127,30 +127,15 @@
                 lang: 'en-US',
                 popover: {
                     image: [
-                        ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                        ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
                         ['float', ['floatLeft', 'floatRight', 'floatNone']],
                         ['remove', ['removeMedia']],
                         ['custom', ['imageAttributes']],
                     ],
-                },
+                },*/
 
             });
         });
-       /* function sendFiles(file, el){
-            let formData = new FormData();
-            formData.append('file', file);
-            $.ajax({
-                data: formData,
-                type: "POST",
-                url: "{{ route('upload-article-files') }}",
-                cache: false,
-                contentType: false,
-                processData: false,
-                success:function(url){
-                    $(el).summernote('editor.insertImage', url);
-                }
-            });
-        }*/
     </script>
 
 @endsection
