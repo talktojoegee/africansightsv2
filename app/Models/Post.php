@@ -33,8 +33,8 @@ class Post extends Model
         $imageFiles = $dom->getElementsByTagName('img');
         foreach($imageFiles as $item=> $image ){
             $data = $image->getAttribute('src');
-            list($type, $data) = explode(';', $data);
-            list(, $data) = explode(',', $data);
+            @list($type, $data) = explode(';', $data);
+            @list(, $data) = explode(',', $data);
             $imageData = base64_decode($data);
             $imageName = "/upload".time().$item.'.png';
             $path = public_path().'/drive'.$imageName;

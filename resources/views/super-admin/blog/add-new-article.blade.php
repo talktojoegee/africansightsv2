@@ -3,9 +3,8 @@
     Add New Article
 @endsection
 @section('extra-styles')
-    <link href="/assets/summernote/summernote.min.css" rel="stylesheet">
     <link href="/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" integrity="sha512-SgaqKKxJDQ/tAUAAXzvxZz33rmn7leYDYfBP+YoMRSENhf3zJyx3SBASt/OfeQwBHA1nxMis7mM3EV/oYT6Fdw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 @endsection
 @section('breadcrumb-action-btn')
 
@@ -106,18 +105,23 @@
 @section('extra-scripts')
     <script src="/assets/libs/select2/js/select2.min.js"></script>
     <script src="/assets/js/pages/form-advanced.init.js"></script>
-    <script src="/assets/summernote/summernote.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#summernote').summernote({
                 height:200,
-               /* callbacks:{
-                    onImageUpload:function (files, editor, welEditable) {
-                        for(let i = files.length - 1; i>= 0; i--){
-                            sendFiles(files[i], this);
-                        }
-                    }
-                },*/
+                /* callbacks:{
+                     onImageUpload:function (files, editor, welEditable) {
+                         for(let i = files.length - 1; i>= 0; i--){
+                             sendFiles(files[i], this);
+                         }
+                     }
+                 },*/
             });
         });
         function sendFiles(file, el){

@@ -56,6 +56,7 @@ class BlogController extends Controller
     }
 
     public function storeArticle(Request $request){
+       // return dd($request->all());
         $this->validate($request,[
             'title'=>'required',
             'postContent'=>'required',
