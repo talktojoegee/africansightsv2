@@ -111,20 +111,32 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <script src="/assets/summernote-image-attribute-editor.js"></script>
+
     <script>
         $(document).ready(function() {
             $('#summernote').summernote({
                 height:200,
-                /* callbacks:{
-                     onImageUpload:function (files, editor, welEditable) {
-                         for(let i = files.length - 1; i>= 0; i--){
-                             sendFiles(files[i], this);
-                         }
-                     }
-                 },*/
+                imageAttributes: {
+                    icon: '<i class="note-icon-pencil"/>',
+                    figureClass: 'figureClass',
+                    figcaptionClass: 'captionClass',
+                    captionText: 'Caption Goes Here.',
+                    manageAspectRatio: true // true = Lock the Image Width/Height, Default to true
+                },
+                lang: 'en-US',
+                popover: {
+                    image: [
+                        ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                        ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                        ['remove', ['removeMedia']],
+                        ['custom', ['imageAttributes']],
+                    ],
+                },
+
             });
         });
-        function sendFiles(file, el){
+       /* function sendFiles(file, el){
             let formData = new FormData();
             formData.append('file', file);
             $.ajax({
@@ -138,7 +150,7 @@
                     $(el).summernote('editor.insertImage', url);
                 }
             });
-        }
+        }*/
     </script>
 
 @endsection
