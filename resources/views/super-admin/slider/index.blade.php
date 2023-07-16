@@ -1,15 +1,12 @@
 @extends('layouts.super-admin-layout')
 @section('current-page')
-    Manage Articles
+    Manage Sliders
 @endsection
 @section('extra-styles')
-    <link href="/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-    <link href="/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-    <link href="/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
 
 @endsection
 @section('breadcrumb-action-btn')
-    Manage Articles
+    Manage Sliders
 @endsection
 
 @section('main-content')
@@ -33,86 +30,97 @@
 
 
     <div class="row">
-        <div class="col-md-12">
-            <div class="card p-3">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
-                            <thead>
-                            <tr>
-                                <th class="">#</th>
-                                <th class="wd-15p">Date</th>
-                                <th class="wd-15p">Title</th>
-                                <th class="wd-15p">Author</th>
-                                <th class="wd-15p">Category</th>
-                                <th class="wd-15p">Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @php $serial = 1; @endphp
-                            @foreach($articles as $article)
-                                <tr>
-                                    <td>{{$serial++}}</td>
-                                    <td>{{date('d M, Y', strtotime($article->created_at))}}</td>
-                                    <td>{{ strlen($article->title) > 32 ? substr($article->title,0,29).'...' : $article->title }}</td>
-                                    <td>{{$article->getAuthor->first_name ?? '' }} {{$article->getAuthor->last_name ?? '' }}</td>
-                                    <td>
-                                        @foreach($article->getFeaturedCategories as $cat)
-                                            {{ $cat->getCategory->category_name ?? '' }},
-                                        @endforeach
-                                    </td>
-                                    <td>
-
-                                        <div class="btn-group">
-                                            <i class="bx bx-dots-vertical dropdown-toggle text-warning" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;"></i>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="{{ route('read-article', $article->slug) }}"> <i class="bx bx-book-open text-info"></i> View Article</a>
-                                                <a class="dropdown-item" href="{{route('edit-article', $article->slug)}}"> <i class="bx bx-pencil text-warning"></i> Edit Article</a>
-                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-target="#deleteArticleModal_{{$article->id}}" data-bs-toggle="modal"> <i class="bx bxs-trash text-danger"></i> Delete</a>
+        @foreach($sliders as $key=>$slide)
+            <div class="col-xl-6">
+                <div id="sliderModal_{{$slide->id}}" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content p-3">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form action="{{route('edit-slide')}}" method="post" autocomplete="off" id="addPropertyForm" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <div class="card-header text-white bg-custom mb-2">Edit New Slider
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div id="deleteArticleModal_{{$article->id}}" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="myModalLabel">Are you sure?</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p class="text-wrap">This action cannot be undone. Are you sure you want to <span class="text-danger">delete</span> <strong><i>{{ $article->title ?? ''  }}</i></strong>?</p>
-                                                        <form action="{{ route('delete-article') }}" method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="articleId" value="{{ $article->id }}">
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Cancel</button>
-                                                                <button type="submit" class="btn btn-danger waves-effect waves-light">Delete</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
+                                            <div class="form-group mt-3">
+                                                <label for="">Title <sup class="text-danger">*</sup></label>
+                                                <input type="text" placeholder="Title" name="title" id="title" value="{{old('title', $slide->caption)}}" class="form-control">
+                                                <br> @error('title')<i class="text-danger">{{$message}}</i>@enderror
+                                            </div>
+                                            <div class="form-group mt-3">
+                                                <label for="">Button Link <small class="text-muted">(Optional)</small></label>
+                                                <input type="text" placeholder="Button Link" name="buttonLink" id="buttonLink" value="{{old('buttonLink', $slide->link)}}" class="form-control">
+                                                <br> @error('buttonLink')<i class="text-danger">{{$message}}</i>@enderror
+                                            </div>
+                                            <div class="form-group mt-3">
+                                                <label for="">Status <sup class="text-danger">*</sup></label> <br>
+                                                <select name="status" style="width: 300px;" id="status" class="form-control ">
+                                                    <option value="1" {{ $slide->status == 1 ? 'selected' : null }}>Active</option>
+                                                    <option value="0" {{ $slide->status == 0 ? 'selected' : null }}>Deactivate</option>
+                                                </select>
+                                                <br> @error('status')<i class="text-danger">{{$message}}</i>@enderror
+                                            </div>
+                                            <div class="form-group mt-3">
+                                                <label for="">Description <sup class="text-danger">*</sup></label>
+                                                <textarea name="description" placeholder="Enter a brief description here." id="description" style="resize: none;" class="form-control">{{ old('description', $slide->description) }}</textarea>
+                                                <br> @error('description')<i class="text-danger">{{$message}}</i>@enderror
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Image <sup class="text-danger">*</sup></label> <br>
+                                                <input type="file"  name="image"  class="form-control-file">
+                                                <br> @error('image')<i class="text-danger">{{$message}}</i>@enderror
+                                            </div>
+
+
+                                            <div class="col-md-12">
+                                                <div class="form-group d-flex justify-content-center mb-3 mt-2">
+                                                    <input type="hidden" name="slideId" value="{{ $slide->id }}">
+                                                    <button type="submit" class="btn btn-custom btn-lg waves-effect waves-light"> Save changes <i class="bx bxs-right-arrow ml-2"></i></button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div id="carouselExampleCaption" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner" role="listbox">
+                                <div class="carousel-item active ">
+                                    <img src="/assets/drive/cloud/{{$slide->attachment ?? 'slide.jpg'}}" alt="..." class="d-block img-fluid">
+                                    <div class="carousel-caption d-none d-md-block text-white-50">
+                                        <h5 class="text-white">{{$slide->caption ?? ''}}</h5>
+                                        <p>{{$slide->description ?? ''}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleCaption" role="button" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleCaption" role="button" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                        <div class="btn-group mt-2 float-end">
+                            <button data-bs-target="#sliderModal_{{$slide->id}}" data-bs-toggle="modal" class="btn-warning btn-sm btn"> Edit <i class="bx bx-pencil"></i> </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
+        @endforeach
     </div>
 @endsection
 
 @section('extra-scripts')
-    <script src="/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
 
-    <script src="/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-    <!-- Datatable init js -->
-    <script src="/assets/js/pages/datatables.init.js"></script>
 
 
 

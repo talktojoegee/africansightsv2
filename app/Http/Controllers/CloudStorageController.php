@@ -113,7 +113,9 @@ class CloudStorageController extends Controller
     }
 
     public function showSliders(){
-        return view('super-admin.slider.index');
+        return view('super-admin.slider.index',[
+            'sliders'=>$this->slider->getSliders()
+        ]);
     }
 
 
@@ -132,6 +134,27 @@ class CloudStorageController extends Controller
         $filename = $this->file->uploadSingleFile($request);
         $this->slider->publishSlider($request, $filename);
         session()->flash("success", "Action successful!");
+        return back();
+    }
+
+
+    public function editSlider(Request $request){
+        $this->validate($request,[
+            'image'=>'required',
+            'description'=>'required',
+            'title'=>'required',
+            'status'=>'required',
+            'slideId'=>'required'
+        ],[
+            'image.required'=>"Choose an image to be used as slider",
+            'description.required'=>"Enter a brief description",
+            'title.required'=>"Enter title ",
+            'status.required'=>"Choose slide status",
+            'slideId'=>''
+        ]);
+        $filename = $this->file->uploadSingleFile($request);
+        $this->slider->editSlider($request, $filename);
+        session()->flash("success", "Your changes were saved");
         return back();
     }
 

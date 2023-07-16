@@ -22,12 +22,19 @@ class Slider extends Model
     }
 
     public function editSlider(Request $request, $filename){
-        $slider =  Slider::find($request->sliderId);
+        $slider =  Slider::find($request->slideId);
         $slider->caption = $request->title ?? 'No title';
         $slider->link = $request->buttonLink ?? null;
         $slider->description = $request->description ?? null;
         $slider->attachment = $filename;
         $slider->status = $request->status ?? 1;
         $slider->save();
+    }
+
+    public function getSliders(){
+        return Slider::orderBy('id', 'DESC')->get();
+    }
+    public function getActiveSliders(){
+        return Slider::where('status', 1)->orderBy('id', 'DESC')->get();
     }
 }

@@ -88,6 +88,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/add-slider', [App\Http\Controllers\CloudStorageController::class, 'showAddNewSlider'])->name('add-new-slider');
         Route::post('/add-slider', [App\Http\Controllers\CloudStorageController::class, 'storeSlider']);
         Route::get('/sliders', [App\Http\Controllers\CloudStorageController::class, 'showSliders'])->name('show-sliders');
+        Route::post('/edit-slide', [App\Http\Controllers\CloudStorageController::class, 'editSlider'])->name('edit-slide');
 
 
         Route::get('/app-modules', [App\Http\Controllers\Admin\AccessControl::class, 'showModules'])->name('show-app-modules');
