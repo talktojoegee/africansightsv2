@@ -1,75 +1,40 @@
 @extends('layouts.super-admin-layout')
 @section('current-page')
-    Overview
-@endsection
-@section('title')
-    Overview
+    Manage Articles
 @endsection
 @section('extra-styles')
+    <link href="/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
 
 @endsection
 @section('breadcrumb-action-btn')
-
+    Manage Articles
 @endsection
 
 @section('main-content')
-    <div class="row mt-3">
-        <div class="col-xxl-3 col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row mb-1">
-                        <div class="col">
-                            <p class="mb-2 text-dark font-size-18">Last Year</p>
-                            <h3 class="mb-0 number-font">{{number_format( $lastYear->count() )}}</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xxl-3 col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row mb-1">
-                        <div class="col">
-                            <p class="mb-2 text-primary font-size-18">This Year</p>
-                            <h3 class="mb-0 number-font">{{number_format( $articles->count() )}}</h3>
-                        </div>
-                    </div>
+    @if(session()->has('success'))
+        <div class="row" role="alert">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="mdi mdi-check-all me-2"></i>
 
-                </div>
-            </div>
-        </div>
-        <div class="col-xxl-3 col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row mb-1">
-                        <div class="col">
-                            <p class="mb-2 font-size-18 text-info">Last Month</p>
-                            <h3 class="mb-0 number-font">{{number_format( $lastMonth->count() )}}</h3>
-                        </div>
-                    </div>
+                            {!! session()->get('success') !!}
 
-                </div>
-            </div>
-        </div>
-        <div class="col-xxl-3 col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row mb-1">
-                        <div class="col">
-                            <p class="mb-2 text-success font-size-18">This Month</p>
-                            <h3 class="mb-0 number-font">{{number_format( $currentMonth->count() )}}</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
+
 
     <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-8">
-            <div class="card">
-                <div class="card-header"><h3 class="card-title">Recent Articles</h3></div>
+        <div class="col-md-12">
+            <div class="card p-3">
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
@@ -85,7 +50,7 @@
                             </thead>
                             <tbody>
                             @php $serial = 1; @endphp
-                            @foreach($recentArticles as $article)
+                            @foreach($articles as $article)
                                 <tr>
                                     <td>{{$serial++}}</td>
                                     <td>{{date('d M, Y', strtotime($article->created_at))}}</td>
@@ -136,28 +101,19 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-4">
-            <div class="card">
-                <div class="card-header"><h3 class="card-title">Recent Comments</h3></div>
-                <div class="card-body">
-                    <div class="activity-block">
-                        <ul class="task-list user-tasks">
-                            @foreach($recentComments as $comment)
-                            <li class="mt-3">
-                                <h6>{{$comment->name ?? '' }} <sup class=" text-danger fs-12"> commented on </sup>
-                                </h6> <span class="text-muted fs-11">
-                                    <a href="{{ route('read-article', $comment->getPost->slug) }}" target="_blank">{{$comment->getPost->title ?? '' }}</a>
-                                </span>
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 @endsection
 
 @section('extra-scripts')
+    <script src="/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+    <!-- Datatable init js -->
+    <script src="/assets/js/pages/datatables.init.js"></script>
+
+
 
 @endsection

@@ -35,6 +35,19 @@ class FileModel extends Model
 
     }
 
+    public function uploadSingleFile(Request $request)
+    {
+        if ($request->hasFile('image')) {
+            $extension = $request->image->getClientOriginalExtension();
+            $size = $request->image->getSize();
+            $filename = uniqid() . '_' . time() . '_' . date('Ymd') . '.' . $extension;
+            $dir = 'assets/drive/cloud/';
+            $request->image->move(public_path($dir), $filename);
+            return $filename;
+        }
+
+    }
+
 
     public function getFilesByFolderId($id){
         return FileModel::where('folder_id', $id)->where('tenant_id', Auth::user()->tenant_id)->get();

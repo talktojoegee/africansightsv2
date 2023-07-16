@@ -21,10 +21,14 @@
             </ul>
         </li>
         <li>
-            <a href="{{route('super-admin-dashboard')}}" class="waves-effect">
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
                 <i class="bx bx-slider"></i>
-                <span key="t-chat">Sliders</span>
+                <span key="t-blog">Sliders</span>
             </a>
+            <ul class="sub-menu" aria-expanded="false">
+                <li><a href="{{route('add-new-slider')}}" key="t-blog">Add New Slider</a></li>
+                <li><a href="{{route('show-sliders')}}" key="t-blog">Manage Sliders</a></li>
+            </ul>
         </li>
         <li class="menu-title">Access Control</li>
         <li>

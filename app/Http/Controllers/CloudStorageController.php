@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FileModel;
 use App\Models\FolderModel;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class CloudStorageController extends Controller
@@ -12,6 +13,8 @@ class CloudStorageController extends Controller
         $this->middleware('auth');
         $this->file = new FileModel();
         $this->folder = new FolderModel();
+
+        $this->slider = new Slider();
     }
 
     public function showCloudStorage(){
@@ -107,5 +110,32 @@ class CloudStorageController extends Controller
             session()->flash("error", "Whoops! Folder does not exist.");
             return back();
         }
+    }
+
+    public function showSliders(){
+        return view('super-admin.slider.index');
+    }
+
+
+    public function storeSlider(Request $request){
+        $this->validate($request,[
+            'image'=>'required',
+            'description'=>'required',
+            'title'=>'required',
+            'status'=>'required',
+        ],[
+            'image.required'=>"Choose an image to be used as slider",
+            'description.required'=>"Enter a brief description",
+            'title.required'=>"Enter title ",
+            'status.required'=>"Choose slide status",
+        ]);
+        $filename = $this->file->uploadSingleFile($request);
+        $this->slider->publishSlider($request, $filename);
+        session()->flash("success", "Action successful!");
+        return back();
+    }
+
+    public function showAddNewSlider(){
+        return view('super-admin.slider.add-new-slider');
     }
 }
