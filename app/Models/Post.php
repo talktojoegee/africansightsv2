@@ -139,4 +139,37 @@ class Post extends Model
     {
         return Post::find($articleId);
     }
+
+
+
+    public function getCurrentYearArticles(){
+        return Post::whereYear('created_at', date('Y'))
+            ->get();
+    }
+
+    public function getLastYearArticles(){
+        $current = date('Y');
+        return Post::whereYear('created_at', $current-1)
+            ->get();
+    }
+
+
+    public function getCurrentMonthArticles(){
+        return Post::whereYear('created_at', date('Y'))
+            ->whereMonth('created_at', date('m'))
+            ->get();
+    }
+
+    public function getLastMonthArticles(){
+        $currentMonth = date('m');
+        $lastMonth = $currentMonth - 1;
+        if($lastMonth == 0){
+            $lastMonth = 12;
+        }
+        return Post::whereYear('created_at', date('Y'))
+            ->whereMonth('created_at', $lastMonth)
+            ->get();
+    }
+
+
 }

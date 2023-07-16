@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 class PostComment extends Model
 {
     use HasFactory;
+
+    public function getPost(){
+        return $this->belongsTo(Post::class, 'post_id');
+    }
     /*
      * $table->unsignedBigInteger('post_id');
             $table->string('name')->nullable();
@@ -28,5 +32,9 @@ class PostComment extends Model
         $comment = PostComment::find($commentId);
         $comment->status = $status;
         $comment->save();
+    }
+
+    public function getRecentComments(){
+        return PostComment::orderBy('id', 'DESC')->take(7)->get();
     }
 }
