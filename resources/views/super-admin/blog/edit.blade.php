@@ -57,7 +57,7 @@
                                             <div class="col-md-12 col-sm-12 col-lg-12">
                                                 <div class="form-group">
                                                     <label for="">Content</label>
-                                                    <textarea name="postContent" id="summernote">{{ old('postContent', $article->article_content) }}</textarea>
+                                                    <textarea name="postContent" id="summernote">{!!  old('postContent', $article->article_content) !!}</textarea>
                                                     @error('postContent') <i class="text-danger">{{$message}}</i> @enderror
                                                 </div>
                                                 <input type="hidden" name="postId" value="{{$article->id}}">
@@ -72,7 +72,7 @@
                                                 <label for="">Category<sup class="text-danger">*</sup></label>
                                                 <select class="form-control select2 select2-multiple " multiple name="category[]">
                                                     @foreach($categories as $key => $cat)
-                                                        <option value="{{$cat->id}}" {{$key == 0 ? 'selected' : '' }}>{{$cat->category_name ?? '' }}</option>
+                                                        <option value="{{$cat->id}}" {{ in_array($cat->id, $catIds)  ? 'selected' : '' }}>{{$cat->category_name ?? '' }}</option>
                                                     @endforeach
                                                 </select>
                                                 <br> @error('category')<i class="text-danger">{{$message}}</i>@enderror
@@ -82,6 +82,9 @@
                                             <div class="form-group">
                                                 <label for="">Featured Image <sup class="text-danger">*</sup></label> <br>
                                                 <input type="file"  name="featuredImage"  class="form-control-file">
+
+                                                <img src="/assets/drive/blog/{{$article->featured_image}}" style="height: 250px; width: 100%;" class="mt-4" alt="" />
+                                                <p class="text-danger m-0 p-0">Previously selected</p>
                                                 <br> @error('featuredImage')<i class="text-danger">{{$message}}</i>@enderror
                                             </div>
                                         </div>

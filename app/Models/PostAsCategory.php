@@ -24,7 +24,20 @@ class PostAsCategory extends Model
         return PostAsCategory::where('category_id', $catId)->pluck('post_id');
     }
 
+    public function pluckPostCategoryIds($postId){
+        return PostAsCategory::where('post_id', $postId)->pluck('category_id')->toArray();
+    }
+
     public function getAllCategories(){
         return PostCategory::all();
+    }
+
+    public function deleteAllRelatedCat($postId){
+         $posts = PostAsCategory::where('post_id', $postId)->get();
+        if(!empty($posts)){
+            foreach ($posts as $post){
+                $post->delete();
+            }
+        }
     }
 }

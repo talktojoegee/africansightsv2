@@ -84,18 +84,19 @@ class BlogController extends Controller
         $this->validate($request,[
             'title'=>'required',
             'postContent'=>'required',
-            'featuredImage'=>'required|image|mimes:jpg,jpeg,png',
+            //'featuredImage'=>'required|image|mimes:jpg,jpeg,png',
             'category'=>'required|array',
             'category.*'=>'required'
         ],[
             "title.required"=>"What's the title of your article?",
             "postContent.required"=>"Certainly your article should have content",
-            "featuredImage.required"=>"Choose a featured image; a nice one will make sense",
-            "featuredImage.mimes"=>"Unsupported format. The following formats are allowed: jpg, jpeg, png",
-            "featuredImage.image"=>"Choose an image to feature in this post",
+            //"featuredImage.required"=>"Choose a featured image; a nice one will make sense",
+            //"featuredImage.mimes"=>"Unsupported format. The following formats are allowed: jpg, jpeg, png",
+            //"featuredImage.image"=>"Choose an image to feature in this post",
             "category.required"=>"Select a category for this article",
         ]);
         $post = $this->post->updatePost($request);
+        $this->postascategory->deleteAllRelatedCat($post->id);
         foreach($request->category as $cat){
             $this->postascategory->createPostAsCategory($post->id, $cat);
         }
@@ -205,6 +206,7 @@ class BlogController extends Controller
                 [
                     'article'=>$article,
                     'categories'=>$this->postascategory->getAllCategories(),
+                    'catIds'=>$this->postascategory->pluckPostCategoryIds($article->id),
                 ]);
         }else{
             session()->flash("error", "Record not found");

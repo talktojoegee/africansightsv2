@@ -29,19 +29,22 @@ class Post extends Model
 
         $content = $request->postContent;
         $dom = new \DOMDocument();
-        @$dom->loadHTML($content, LIBXML_HTML_NOIMPLIED| LIBXML_HTML_NODEFDTD);
+        @$dom->loadHTML($content, LIBXML_NOWARNING| LIBXML_NOERROR);
         $imageFiles = $dom->getElementsByTagName('img');
         foreach($imageFiles as $item=> $image ){
             $data = $image->getAttribute('src');
-            @list($type, $data) = explode(';', $data);
-            @list(, $data) = explode(',', $data);
-            $imageData = base64_decode($data);
-            $imageName = "/upload".time().$item.'.png';
-            $path = public_path().'/drive'.$imageName;
-            file_put_contents($path, $imageData);
+            if (strpos($data, 'data:image')!==false){
+                @list($type, $data) = explode(';', $data);
+                @list(, $data) = explode(',', $data);
+                //decode base64
+                $imageData = base64_decode($data);
+                $imageName = "/upload".time().$item.'.png';
+                $path = public_path().'/drive'.$imageName;
+                file_put_contents($path, $imageData);
 
-            $image->removeAttribute('src');
-            $image->setAttribute('src', '/drive/'.$imageName);
+                $image->removeAttribute('src');
+                $image->setAttribute('src', '/drive/'.$imageName);
+            }
         }
         $content = $dom->saveHTML();
 
@@ -70,20 +73,25 @@ class Post extends Model
             $content = $request->postContent;
             $dom = new \DOMDocument();
         //return dd($dom);
-            @$dom->loadHTML($content, LIBXML_HTML_NOIMPLIED| LIBXML_HTML_NODEFDTD);
+            @$dom->loadHTML($content, LIBXML_NOWARNING| LIBXML_NOERROR);
+            //@$dom->loadHTML($content, LIBXML_HTML_NOIMPLIED| LIBXML_HTML_NODEFDTD);
             $imageFiles = $dom->getElementsByTagName('img');
             //return dd($imageFiles);
             foreach($imageFiles as $item=> $image ){
                 $data = $image->getAttribute('src');
-                @list($type, $data) = explode(';', $data);
-                @list(, $data) = explode(',', $data);
-                $imageData = base64_decode($data);
-                $imageName = "/upload".time().$item.'.png';
-                $path = public_path().'/drive'.$imageName;
-                file_put_contents($path, $imageData);
+                if (strpos($data, 'data:image')!==false){
+                    @list($type, $data) = explode(';', $data);
+                    @list(, $data) = explode(',', $data);
+                    //decode base64
+                    $imageData = base64_decode($data);
+                    $imageName = "/upload".time().$item.'.png';
+                    $path = public_path().'/drive'.$imageName;
+                    file_put_contents($path, $imageData);
 
-                $image->removeAttribute('src');
-                $image->setAttribute('src', '/drive/'.$imageName);
+                    $image->removeAttribute('src');
+                    $image->setAttribute('src', '/drive/'.$imageName);
+                }
+
             }
             $content = $dom->saveHTML();
 
@@ -94,14 +102,14 @@ class Post extends Model
             $article->article_content = $content;// $request->postContent;
             $article->slug = Str::slug($request->title).'-'.Str::random(4);
             //$article->categories = implode(',',$request->category);
-            if ($request->file()) {
+            if ($request->hasFile('featuredImage')) {
                 $extension = $request->featuredImage->getClientOriginalExtension();
                 $filename = uniqid() . '_' . time() . '_' . date('Ymd') . '.' . $extension;
                 $dir = 'assets/drive/blog/';
                 $request->featuredImage->move(public_path($dir), $filename);
                 $featuredImage = $filename;
+                $article->featured_image = $featuredImage;
             }
-            $article->featured_image = $featuredImage;
             $article->save();
             return $article;
         /*}catch (\Exception $exception){
