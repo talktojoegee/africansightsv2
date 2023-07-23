@@ -121,22 +121,18 @@
         $(document).ready(function() {
             $('#summernote').summernote({
                 height:200,
-                /*      imageAttributes: {
-                          icon: '<i class="note-icon-pencil"/>',
-                          figureClass: 'figureClass',
-                          figcaptionClass: 'captionClass',
-                          captionText: 'Caption Goes Here.',
-                          manageAspectRatio: true // true = Lock the Image Width/Height, Default to true
-                      },
-                      lang: 'en-US',
-                      popover: {
-                          image: [
-                              ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
-                              ['float', ['floatLeft', 'floatRight', 'floatNone']],
-                              ['remove', ['removeMedia']],
-                              ['custom', ['imageAttributes']],
-                          ],
-                      },*/
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'hr']],
+                    ['view', ['fullscreen', 'codeview']],
+                    ['help', ['help']]
+                ],
 
             });
         });
