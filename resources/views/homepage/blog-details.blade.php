@@ -14,7 +14,7 @@
                     <nav id="breadcrumbs">
                         <ul>
                             <li><a href="{{route('homepage')}}">Home</a></li>
-                            <li>{{$article->title ?? '' }}</li>
+                            <li>Details</li>
                         </ul>
                     </nav>
 
