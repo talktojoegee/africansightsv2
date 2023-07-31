@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-md-12">
 
-                    <h2>Blog</h2>
+                    <h2>{{$article->title ?? '' }}</h2>
                     <nav id="breadcrumbs">
                         <ul>
                             <li><a href="{{route('homepage')}}">Home</a></li>
@@ -34,9 +34,7 @@
                <div class="blog-post single-post">
                    <img class="post-img" src="/assets/drive/blog/{{$article->featured_image ?? 'featured_image.png'}}" alt="{{$article->title ?? '' }}">
                    <div class="post-content">
-                       <h3>{{$article->title ?? '' }}</h3>
                        <ul class="post-meta">
-                           <li><span class="text-danger">Posted By:</span> {{$article->getAuthor->first_name ?? '' }} {{$article->getAuthor->last_name ?? '' }}</li>
                            <li>{{date('d M, Y', strtotime($article->created_at))}}</li>
                             @foreach($article->getFeaturedCategories as $cat)
                                <li><a href="#">{{$cat->getCategory->category_name ?? '' }}</a></li>

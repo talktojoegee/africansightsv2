@@ -11,7 +11,7 @@
                 <a href="{{ route('homepage') }}">
                     <img height="100" width="160" src="/assets/images/logo.png" class="attachment-full size-full" alt="Culture tourist" decoding="async" loading="lazy" >
                 </a>
-                <h4 style="margin: 15px 0 -5px 46px;">
+                <h4 style="margin: 15px 0 0px 0px;">
                     ...sights and sounds of Africa
                 </h4>
             </div>
