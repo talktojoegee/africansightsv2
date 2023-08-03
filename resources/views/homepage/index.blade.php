@@ -55,7 +55,7 @@
                                             <img src="/assets/drive/blog/{{$article->featured_image ?? 'featured_image.png'}}" style="height: 278px;" alt="{{ $article->title ?? ''  }}">
                                         </a>
                                         <div class="post-content">
-                                            <h3><a href="{{route('view-blog',$article->slug)}}">{{ strlen($article->title) > 32 ? substr($article->title,0,29).'...' : $article->title }} </a></h3>
+                                            <h3><a href="{{route('view-blog',$article->slug)}}">{{ $article->title ?? ''  }} </a></h3>
 
                                             <ul class="post-meta">
                                                 <li>{{date('d M, Y', strtotime($article->created_at))}}</li>
