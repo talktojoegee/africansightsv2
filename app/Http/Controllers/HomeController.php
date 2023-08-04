@@ -202,7 +202,9 @@ class HomeController extends Controller
             return view('homepage.blog-details',[
                 'article'=>$article,
                 'populars'=>$this->post->getPopularArticles(),
-                'related'=>$this->post->getRelatedArticles()
+                'related'=>$this->post->getRelatedArticles(),
+                'num1'=>rand(10,100),
+                'num2'=>rand(10,100),
             ]);
         }else{
             session()->flash("error", "No record found.");
@@ -216,18 +218,27 @@ class HomeController extends Controller
             'email'=>'required|email',
             'postId'=>'required',
             'comment'=>'required',
-            'g-recaptcha-response' => 'required|captcha',
+            'sum'=>'required',
+            //'g-recaptcha-response' => 'required|captcha',
         ],[
             "name.required"=>"Enter your name in the box provided",
             "email.required"=>"Enter your email address",
             "email.email"=>"Enter a valid email address",
             "comment.required"=>"What's on your mind? Type it in the box provided.",
-            'g-recaptcha-response.captcha'=>'Incorrect captcha',
-            'g-recaptcha-response.required'=>"Our system thinks you're a robot. Why not proof it wrong?",
+            "sum.required"=>"Whoops! Wrong summation. Please try again.",
+            //'g-recaptcha-response.captcha'=>'Incorrect captcha',
+            //'g-recaptcha-response.required'=>"Our system thinks you're a robot. Why not proof it wrong?",
         ]);
-        $this->postcomment->createPostComment($request);
-        session()->flash("success", "Thank you for taking your time to leave a comment. We'll review your comment and act accordingly.");
-        return back();
+        $val = $request->sum ?? 0;
+        if($val == ($request->num1 + $request->num2)){
+            $this->postcomment->createPostComment($request);
+            session()->flash("success", "Thank you for taking your time to leave a comment. We'll review your comment and act accordingly.");
+            return back();
+        }else{
+            session()->flash("error", "Wrong summation. Please try again.");
+            return back();
+        }
+
     }
 
     public function searchArticle(Request $request){

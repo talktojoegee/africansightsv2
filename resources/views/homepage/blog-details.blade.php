@@ -30,6 +30,12 @@
                    <a class="close"></a>
                </div>
            @endif
+               @if(session()->has('error'))
+                   <div class="notification warning closeable">
+                       <p><span>Whoops!</span> {!! session()->get('error') !!}</p>
+                       <a class="close"></a>
+                   </div>
+               @endif
            <div class="col-lg-9 col-md-8 padding-right-30">
                <div class="blog-post single-post">
                    <img class="post-img" src="/assets/drive/blog/{{$article->featured_image ?? 'featured_image.png'}}" alt="{{$article->title ?? '' }}">
@@ -111,7 +117,15 @@
                                    <input type="hidden" name="postId" value="{{$article->id}}">
                                </div>
                            </div>
-
+                           <div class="row">
+                               <div class="col-md-6">
+                                   <label>What's the sum of {{$num1}} and {{$num2}}</label>
+                                   <input type="number" value="{{old('sum')}}" name="sum" placeholder="What's the sum..."/>
+                                   <input type="hidden" name="num1" value="{{$num1}}">
+                                   <input type="hidden" name="num2" value="{{$num2}}">
+                                   @error('sum') <i class="text-danger">{{$message}}</i> @enderror
+                               </div>
+                           </div>
                            <div>
                                <label>Comment:</label>
                                <textarea cols="40" rows="3" name="comment" placeholder="Type your comment here...">{{old('comment')}}</textarea>
