@@ -252,7 +252,8 @@ class HomeController extends Controller
         return view('homepage.blog',[
             'articles'=>$articles,
             'populars'=>$this->post->getPopularArticles(),
-            'related'=>$this->post->getRelatedArticles()
+            'related'=>$this->post->getRelatedArticles(),
+            'categories'=>$this->postcategory->getAllCategories()
         ]);
     }
 
