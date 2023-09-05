@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <head>
     <title>{{config('app.name')}} | @yield('title')</title>
+    @yield('meta-data')
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
     <link rel="stylesheet" href="/home/css/style.css">
     <link rel="stylesheet" href="/home/css/main-color.css" id="colors">
     <link rel="stylesheet" type="text/css" href="{{asset("vendor/cookie-consent/css/cookie-consent.css")}}">

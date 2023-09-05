@@ -62,6 +62,48 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12 col-sm-12 col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="">Summary & Description(Meta tag)</label>
+                                                    <textarea name="summaryMeta" id="summaryMeta" style="resize: none;"
+                                                              class="form-control" placeholder="Summary & Description(Meta tag)">{{ old('summaryMeta') }}</textarea>
+                                                    @error('summaryMeta') <i class="text-danger">{{$message}}</i> @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12 col-sm-12 col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="">Keywords</label>
+                                                    <textarea name="keywords" id="keywords" style="resize: none;"
+                                                              class="form-control" placeholder="Keywords (enter a list of keywords related to this article. Separating them with a comma)">{{ old('keywords') }}</textarea>
+                                                    @error('keywords') <i class="text-danger">{{$message}}</i> @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12 col-sm-12 col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="">Tags</label>
+                                                    <textarea name="tags" id="tags" style="resize: none;"
+                                                              class="form-control" placeholder="Type your list of tags here. Separating them with a comma ">{{ old('tags') }}</textarea>
+                                                    @error('tags') <i class="text-danger">{{$message}}</i> @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12 col-sm-12 col-lg-12">
+                                                <div class="form-group">
+                                                    <a href="" id="titleAnchor">Placeholder</a>
+                                                    <p id="slug">http://www.africasights.com/placeholder</p>
+                                                    <p id="summaryPreview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem doloremque error maiores nam placeat quam reiciendis temporibus vel. Blanditiis distinctio nam nisi possimus quasi. Consequatur dolorem id illum molestiae porro!</p>
+                                                    <div id="tagList">
+                                                        <a href="">Tags</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-lg-3">
@@ -111,10 +153,30 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-    {{--<script src="/assets/summernote-image-attribute-editor.js"></script>--}}
 
     <script>
         $(document).ready(function() {
+            let baseUrl = "{{ env('APP_URL') }}";
+            let title, summary, summaryMeta, keywords,tags;
+            $('#title').on('blur', function(){
+                title = $(this).val();
+                $('#titleAnchor').text(title);
+                let slug = convertToSlug(title);
+                $('#slug').text(`${baseUrl}/${slug}`)
+            });
+            $('#summaryMeta').on('blur', function(){
+                summary = $(this).val();
+                $('#summaryPreview').text(summary);
+            });
+            $('#tags').on('blur', function(){
+                let ls = [];
+                let tagList = convertTagStringToArray($(this).val());
+                for(let i = 0; i<tagList.length; i++){
+                    ls.push(`<a href='#'>${tagList[i]}</a>  · `);
+                   // $('#tagList').html(`<a href='#'>${tagList[i]}</a>`);
+                }
+                $('#tagList').html(ls);
+            });
             $('#summernote').summernote({
                 height:200,
                 toolbar: [
@@ -133,6 +195,16 @@
 
             });
         });
+
+        function convertToSlug(Text) {
+            return Text.toLowerCase()
+                .replace(/ /g, "-")
+                .replace(/[^\w-]+/g, "");
+        }
+
+        function convertTagStringToArray(string){
+            return  string.split(',');
+        }
     </script>
 
 @endsection

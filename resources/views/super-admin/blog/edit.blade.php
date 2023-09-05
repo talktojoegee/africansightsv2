@@ -63,6 +63,52 @@
                                                 <input type="hidden" name="postId" value="{{$article->id}}">
                                             </div>
                                         </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12 col-sm-12 col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="">Summary & Description(Meta tag)</label>
+                                                    <textarea name="summaryMeta" id="summaryMeta" style="resize: none;"
+                                                              class="form-control" placeholder="Summary & Description(Meta tag)">{{ old('summaryMeta', $article->meta_description) }}</textarea>
+                                                    @error('summaryMeta') <i class="text-danger">{{$message}}</i> @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12 col-sm-12 col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="">Keywords</label>
+                                                    <textarea name="keywords" id="keywords" style="resize: none;"
+                                                              class="form-control" placeholder="Keywords (enter a list of keywords related to this article. Separating them with a comma)">{{ old('keywords', $article->keywords) }}</textarea>
+                                                    @error('keywords') <i class="text-danger">{{$message}}</i> @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12 col-sm-12 col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="">Tags</label>
+                                                    <textarea name="tags" id="tags" style="resize: none;"
+                                                              class="form-control" placeholder="Type your list of tags here. Separating them with a comma ">{{ old('tags', $article->tags) }}</textarea>
+                                                    @error('tags') <i class="text-danger">{{$message}}</i> @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12 col-sm-12 col-lg-12">
+                                                <div class="form-group">
+                                                    <a href="" id="titleAnchor">{{$article->title ?? ''}}</a>
+                                                    <p id="slug">http://www.africasights.com/{{$article->slug ?? ''}}</p>
+                                                    <p id="summaryPreview">{{$article->meta_description ?? substr(strip_tags($article->article_content),0,50)}}</p>
+                                                    <div id="tagList">
+                                                        @if(!empty($article->tags))
+                                                           @foreach(explode(",", $article->tags) as $tag)
+                                                                <a href="#">{{$tag}}</a> ·
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-lg-3">
@@ -119,6 +165,26 @@
 
     <script>
         $(document).ready(function() {
+            let baseUrl = "{{ env('APP_URL') }}";
+            let title, summary, summaryMeta, keywords,tags;
+            $('#title').on('blur', function(){
+                title = $(this).val();
+                $('#titleAnchor').text(title);
+                let slug = convertToSlug(title);
+                $('#slug').text(`${baseUrl}/${slug}`)
+            });
+            $('#summaryMeta').on('blur', function(){
+                summary = $(this).val();
+                $('#summaryPreview').text(summary);
+            });
+            $('#tags').on('blur', function(){
+                let ls = [];
+                let tagList = convertTagStringToArray($(this).val());
+                for(let i = 0; i<tagList.length; i++){
+                    ls.push(`<a href='#'>${tagList[i]}</a>  · `);
+                }
+                $('#tagList').html(ls);
+            });
             $('#summernote').summernote({
                 height:200,
                 toolbar: [
@@ -137,6 +203,16 @@
 
             });
         });
+
+        function convertToSlug(Text) {
+            return Text.toLowerCase()
+                .replace(/ /g, "-")
+                .replace(/[^\w-]+/g, "");
+        }
+
+        function convertTagStringToArray(string){
+            return  string.split(',');
+        }
     </script>
 
 

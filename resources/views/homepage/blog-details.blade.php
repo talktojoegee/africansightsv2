@@ -4,7 +4,13 @@
     Blog Details
 @endsection
 
+@section('meta-data')
+   @include('super-admin.blog.partial._meta-data')
+@endsection
+
+
 @section('main-content')
+
     <div id="titlebar" class="gradient">
         <div class="container">
             <div class="row">

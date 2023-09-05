@@ -62,7 +62,10 @@ class BlogController extends Controller
             'postContent'=>'required',
             'featuredImage'=>'required|image|mimes:jpg,jpeg,png',
             'category'=>'required|array',
-            'category.*'=>'required'
+            'category.*'=>'required',
+            'summaryMeta'=>'required',
+            'keywords'=>'required',
+            'tags'=>'required',
         ],[
             "title.required"=>"What's the title of your article?",
             "postContent.required"=>"Certainly your article should have content",
@@ -70,6 +73,9 @@ class BlogController extends Controller
             "featuredImage.mimes"=>"Unsupported format. The following formats are allowed: jpg, jpeg, png",
             "featuredImage.image"=>"Choose an image to feature in this post",
             "category.required"=>"Select a category for this article",
+            "summaryMeta.required"=>"Enter a meta description in the field provided",
+            "keywords.required"=>"Enter a related keywords",
+            "tags.required"=>"Enter a related tags",
         ]);
         $post = $this->post->createNewPost($request);
         foreach($request->category as $cat){
@@ -194,7 +200,7 @@ class BlogController extends Controller
 
     public function manageArticles(){
         return view('super-admin.blog.index',[
-            'articles'=>$this->post->getArticles()
+            'articles'=>$this->post->getAllArticles()
         ]);
     }
 

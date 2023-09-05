@@ -53,8 +53,10 @@ class Post extends Model
         $article->title = $request->title;
         $article->author = Auth::user()->id;
         $article->article_content = $content;// $request->postContent;
+        $article->meta_description = $request->summaryMeta ?? '';
+        $article->keywords = $request->keywords ?? '';
+        $article->tags = $request->tags ?? '';
         $article->slug = Str::slug($request->title).'-'.Str::random(4);
-        //$article->categories = implode(',',$request->category);
         if ($request->file()) {
             $extension = $request->featuredImage->getClientOriginalExtension();
             $filename = uniqid() . '_' . time() . '_' . date('Ymd') . '.' . $extension;
@@ -100,6 +102,9 @@ class Post extends Model
             $article->title = $request->title;
             $article->author = Auth::user()->id;
             $article->article_content = $content;// $request->postContent;
+            $article->meta_description = $request->summaryMeta ?? '';
+            $article->keywords = $request->keywords ?? '';
+            $article->tags = $request->tags ?? '';
             $article->slug = Str::slug($request->title).'-'.Str::random(4);
             //$article->categories = implode(',',$request->category);
             if ($request->hasFile('featuredImage')) {
@@ -119,6 +124,9 @@ class Post extends Model
 
     public function getArticles(){
         return Post::orderBy('id', 'DESC')->paginate(10);
+    }
+    public function getAllArticles(){
+        return Post::orderBy('id', 'DESC')->get();
     }
     public function getBulkArticlesById($ids){
         return Post::whereIn('id', $ids)->orderBy('id', 'DESC')->paginate(10);
