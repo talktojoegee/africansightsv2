@@ -1,7 +1,7 @@
 @extends('layouts.homepage-layout')
 
 @section('title')
-    $article->title
+{{$article->title ?? '' }}
 @endsection
 
 @section('meta-data')
