@@ -1,7 +1,7 @@
 @extends('layouts.homepage-layout')
 
 @section('title')
-    Blog Details
+    $article->title
 @endsection
 
 @section('meta-data')
