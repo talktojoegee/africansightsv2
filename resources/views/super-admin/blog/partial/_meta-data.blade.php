@@ -1,6 +1,6 @@
 <meta name="title" content="{{ $article->title ?? '' }}"/>
 <meta name="keywords" content="{{ $article->keywords ?? substr(strip_tags($article->article_content),0,20) }}"/>
-<meta name="description" content="{{ $article->meta_description ?? substr(strip_tags($article->article_content),0,50) }}"/>
+<meta name="description" content="{{ $article->meta_description ?? substr(strip_tags($article->article_content),0,180) }}"/>
 <meta name="robots" content="index,follow"/>
 <meta name="revisit-after" content="7 days">
 <meta name="coverage" content="Worldwide">
