@@ -21,6 +21,8 @@
                    src="https://www.facebook.com/tr?id=6501510113229349&ev=PageView&noscript=1"
         /></noscript>
     <!-- End Meta Pixel Code -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6975718505477380"
+            crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/home/css/style.css">
     <link rel="stylesheet" href="/home/css/main-color.css" id="colors">
     <link rel="stylesheet" type="text/css" href="{{asset("vendor/cookie-consent/css/cookie-consent.css")}}">
