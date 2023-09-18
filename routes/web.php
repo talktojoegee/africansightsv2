@@ -31,6 +31,11 @@ Route::get('/category/{slug}', [App\Http\Controllers\HomeController::class, 'sho
 
 
 Auth::routes();
+Auth::routes([
+    'register' => false,
+    'reset' => false,
+    'verify' => false,
+]);
 Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
 
 
