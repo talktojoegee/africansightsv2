@@ -36,7 +36,7 @@ Auth::routes([
     'reset' => false,
     'verify' => false,
 ]);
-Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
+//Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
 
 
 Route::get('/general-login', [App\Http\Controllers\Auth\LoginController::class, 'showGeneralLoginForm'])->name('general-login');
