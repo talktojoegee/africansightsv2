@@ -47,29 +47,30 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
         $this->user = new User();
-        $this->tenant = new Tenant();
+        //$this->tenant = new Tenant();
         $this->adminnotification = new AdminNotification();
-        $this->tenantnotification = new TenantNotification();
-        $this->plan = new Plan();
+        //$this->tenantnotification = new TenantNotification();
+        //$this->plan = new Plan();
 
         //Service
-        $this->services = new ServicesController();
+        //$this->services = new ServicesController();
     }
 
     public function showRegistrationForm(Request $request){
-        $plan = $this->plan->getFirstPlan();
-        $selected = $this->plan->getPlanBySlug($request->plan);
+        return redirect()->route('homepage');
+        //$plan = $this->plan->getFirstPlan();
+        //$selected = $this->plan->getPlanBySlug($request->plan);
 
-        $urlId = null;
+      /*  $urlId = null;
         if(!empty($selected)){
             $urlId = $selected->id;
         }else{
             $urlId = $plan->id;
-        }
+        }*/
 
-        return view('auth.register',[
+        /*return view('auth.register',[
             'planId'=>$urlId,
-        ]);
+        ]);*/
 
     }
 
