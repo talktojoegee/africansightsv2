@@ -36,6 +36,9 @@ Auth::routes([
     'reset' => false,
     'verify' => false,
 ]);
+Route::post('/register',function(){
+    return redirect()->route('homepage');
+});
 //Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
 
 
